@@ -5,11 +5,13 @@ public class User {
     private final long id;
     private final String login;
     private final String password;
+    private final Credentials credentials;
 
-    public User(long id, String login, String password) {
+    public User(long id, String login, String password,Credentials credentials) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.credentials=credentials;
     }
 
     public long getId() {
@@ -23,6 +25,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+    public Credentials getCredentials(){return credentials};
 
 
     public static class UserBuilder {
