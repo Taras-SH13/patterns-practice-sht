@@ -10,4 +10,5 @@ public interface UserAuthenticator {
 	 * @return role of the user who's credentials are checked
 	 */
 	UserRole authenticate(Credentials credentials);
+
 }

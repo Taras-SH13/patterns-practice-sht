@@ -17,7 +17,7 @@ public interface UserService {
 
 	/**
 	 * admin role is required for this operation
-	 * this method should create user and save his credentials to db
+	 * this method should delete user and save his credentials to db
 	 * @param id unique user identifier
 	 * @return boolean result to show if the user was deleted
 	 */
