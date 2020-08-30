@@ -32,6 +32,7 @@ public class User {
         private long id;
         private String login;
         private String password;
+        private Credentials credentials;
 
         public UserBuilder setUserId(long id) {
             this.id = id;
@@ -48,8 +49,6 @@ public class User {
             return this;
         }
 
-        public User userBuild() {
-            return new User(id, login, password);
-        }
+
     }
 }
