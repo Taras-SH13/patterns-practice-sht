@@ -5,12 +5,12 @@ import java.util.Map;
 
 public final class UsersDB {
     // singleton realization
-    private static Map<UserEntity, CredentialsEntity> dboffUsers;
+    private static Map<CredentialsEntity,UserEntity> dboffUsers;
 
     private UsersDB() {
     }
 
-    public static Map<UserEntity, CredentialsEntity> getDboffUsers() {
+    public static Map<CredentialsEntity,UserEntity> getDboffUsers() {
         if (dboffUsers == null) {
             dboffUsers = new HashMap<>();
         }

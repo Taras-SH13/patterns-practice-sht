@@ -2,7 +2,7 @@ package com.skillsup.patterns.db;
 
 import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +15,12 @@ public class EntityRepositoryImpl implements EntityRepository {
 
     @Override
     public void save() {
-        db.put(user, credentials);
+        db.put(credentials,user);
     }
 
     @Override
     public void find() {
-        db.get(user);
+        db.get(credentials);
     }
 
 
