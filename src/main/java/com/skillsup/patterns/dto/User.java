@@ -1,17 +1,21 @@
 package com.skillsup.patterns.dto;
 
 
+import com.skillsup.patterns.UserRole;
+
 public class User {
     private final long id;
     private final String login;
     private final String password;
     private final Credentials credentials;
+    private final UserRole userRole;
 
-    public User(long id, String login, String password,Credentials credentials) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.credentials=credentials;
+    private User(UserBuilder userBuilder) {
+        this.id = userBuilder.id;
+        this.login = userBuilder.login;
+        this.password = userBuilder.password;
+        this.credentials = userBuilder.credentials;
+        this.userRole = userBuilder.userRole;
     }
 
     public long getId() {
@@ -25,7 +29,10 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public Credentials getCredentials(){return credentials};
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
 
 
     public static class UserBuilder {
@@ -33,6 +40,7 @@ public class User {
         private String login;
         private String password;
         private Credentials credentials;
+        private UserRole userRole;
 
         public UserBuilder setUserId(long id) {
             this.id = id;
@@ -44,11 +52,23 @@ public class User {
             return this;
         }
 
-        public UserBuilder setUserpassword(String password) {
+        public UserBuilder setUserPassword(String password) {
             this.password = password;
             return this;
         }
 
+        public UserBuilder setUserCredentials(Credentials credentials) {
+            this.credentials = credentials;
+            return this;
+        }
 
+        public UserBuilder setUserRole(UserRole userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public User toCreate() {
+            return new User(this);
+        }
     }
 }

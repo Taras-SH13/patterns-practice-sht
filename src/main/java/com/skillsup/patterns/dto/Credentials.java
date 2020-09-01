@@ -4,9 +4,9 @@ public class Credentials {
 	private final String login;
 	private final String password;
 
-	public Credentials(String login, String password) {
-		this.login = login;
-		this.password = password;
+	private Credentials(CredentialsBuilder credentialsBuilder) {
+		this.login = credentialsBuilder.login;
+		this.password = credentialsBuilder.password;
 	}
 
 	public String getLogin() {
@@ -17,22 +17,24 @@ public class Credentials {
 		return password;
 	}
 
-	public static class CredentialsBuilder{
+
+	public static class CredentialsBuilder {
 
 		private String login;
 		private String password;
 
-		public CredentialsBuilder setLogin(String login){
+		public CredentialsBuilder setLogin(String login) {
 			this.login = login;
 			return this;
 		}
-		public CredentialsBuilder setLpassword(String password){
+
+		public CredentialsBuilder setPassword(String password) {
 			this.password = password;
 			return this;
 		}
-		public Credentials credentialsBuild() {
-			return new Credentials(login, password);
-		}
-	}
 
+public Credentials create(){return new Credentials(this);}
+	}
 }
+
+

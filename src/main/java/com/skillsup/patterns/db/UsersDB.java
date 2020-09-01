@@ -10,8 +10,6 @@ public final class UsersDB {
     private UsersDB() {
     }
 
-
-
     public static Map<UserEntity, CredentialsEntity> getDboffUsers() {
         if (dboffUsers == null) {
             dboffUsers = new HashMap<>();
