@@ -14,7 +14,7 @@ public class User {
         this.id = userBuilder.id;
         this.login = userBuilder.login;
         this.password = userBuilder.password;
-        this.credentials = userBuilder.getCredentials();
+        this.credentials = userBuilder.credentials;
         this.userRole = userBuilder.userRole;
     }
 
@@ -34,16 +34,22 @@ public class User {
         return credentials;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    ;
 
     public static class UserBuilder {
         private long id;
         private String login;
         private String password;
-        private Credentials credentials=new Credentials.CredentialsBuilder().setLogin(login).setPassword(password).create();
+        private Credentials credentials;
         private UserRole userRole;
 
-        public Credentials getCredentials() {
-            return credentials;
+        public UserBuilder setCredentials(Credentials credentials) {
+            this.credentials = credentials;
+            return this;
         }
 
         public UserBuilder setUserId(long id) {
@@ -61,10 +67,6 @@ public class User {
             return this;
         }
 
-//        public UserBuilder setUserCredentials(Credentials credentials) {
-//            this.credentials = credentials;
-//            return this;
-        //}
 
         public UserBuilder setUserRole(UserRole userRole) {
             this.userRole = userRole;
