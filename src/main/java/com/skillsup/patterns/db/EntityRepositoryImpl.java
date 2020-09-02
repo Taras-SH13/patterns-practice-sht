@@ -14,13 +14,13 @@ public class EntityRepositoryImpl implements EntityRepository {
     private Map db = UsersDB.getDboffUsers();
 
     @Override
-    public void save() {
-        db.put(credentials,user);
+    public void save(UserEntity userEntity) {
+        db.put(userEntity.getCredentials(),userEntity);
     }
 
     @Override
-    public void find() {
-        db.get(credentials);
+    public UserEntity findUser(CredentialsEntity credentialsEntity) {
+        return (UserEntity)db.get(credentials);
     }
 
 
