@@ -7,11 +7,11 @@ import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
 public class UserAuthenticatorImpl implements UserAuthenticator {
-    UserAuthenticatorImpl next;
+    UserAuthenticator next;
     EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
 
 
-    public void setNext(UserAuthenticatorImpl next) {
+    public void setNext(UserAuthenticator next) {
         this.next = next;
     }
 
