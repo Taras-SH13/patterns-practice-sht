@@ -8,16 +8,14 @@ import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnauthorizedAccessException {
         User adminUser = new
                 User.UserBuilder().setUserId(1).setUserLogin("admin")
                 .setUserPassword("admin")
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("admin")
                         .setPassword("admin").create()).setUserRole(UserRole.ADMIN).toCreate();
-        System.out.println(adminUser);
 
         new EntityRepositoryImpl().save(Converter.userToUserEntity(adminUser));
-
 
         User simpleUser = new
                 User.UserBuilder().setUserId(2).setUserLogin("user")
@@ -26,7 +24,9 @@ public class App {
                         .setPassword("user").create()).setUserRole(UserRole.COMMON).toCreate();
 
         new EntityRepositoryImpl().save(Converter.userToUserEntity(simpleUser));
-        System.out.println(UsersDB.getDboffUsers());
+        Credentials newCredentials=new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
+        UserAuthenticator userAuthenticator=new UserAuthenticatorImpl();
+        System.out.println(userAuthenticator.authenticate(adminUser.getCredentials()));
     }
 
 }

@@ -9,6 +9,6 @@ public interface UserAuthenticator {
 	 * @param credentials user passwrod and user unique login
 	 * @return role of the user who's credentials are checked
 	 */
-	UserRole authenticate(Credentials credentials);
+	UserRole authenticate(Credentials credentials) throws UnauthorizedAccessException;
 
 }

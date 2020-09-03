@@ -15,13 +15,15 @@ public class EntityRepositoryImpl implements EntityRepository {
 
     @Override
     public void save(UserEntity userEntity) {
-        db.put(userEntity.getCredentials(),userEntity);
+        db.put(userEntity.getCredentials(), userEntity);
     }
 
     @Override
     public UserEntity findUser(CredentialsEntity credentialsEntity) {
-        return (UserEntity)db.get(credentials);
+        return (UserEntity) db.get(credentials);
     }
 
-
+    public boolean chek(Credentials credentials) {
+        return db.containsKey(credentials);
+    }
 }
