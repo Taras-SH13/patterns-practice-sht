@@ -27,6 +27,7 @@ public class App {
         Credentials newCredentials=new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
         UserAuthenticator userAuthenticator=new UserAuthenticatorImpl();
         System.out.println(userAuthenticator.authenticate(adminUser.getCredentials()));
+        System.out.println(userAuthenticator.authenticate(newCredentials));
     }
 
 }

@@ -7,28 +7,26 @@ import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
 public class UserAuthenticatorImpl implements UserAuthenticator {
-    UserAuthenticator next;
+    UserAuthenticatorImpl next;
     EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
-    User user;
 
-    public UserAuthenticator setNext(UserAuthenticator next) {
+
+    public void setNext(UserAuthenticatorImpl next) {
         this.next = next;
-        return next;
     }
-
 
     @Override
-    public UserRole authenticate(Credentials credentials) throws UnauthorizedAccessException {
-
+    public UserRole authenticate(Credentials credentials) {
         try {
-            if (entityRepository.chek(credentials) == false)
-                throw new UnauthorizedAccessException("Нет такого пользователя!");
-        } catch (UnauthorizedAccessException e) {
-            System.out.println(e.getMessage());
+            return entityRepository.findUser(credentials).getUserRole();
+        } catch (NullPointerException e) {
+            System.out.println("This user is not registered!!");
+            return UserRole.UNKNOWN;
+        } finally {
+            if (next != null)
+                return next.authenticate(credentials);
         }
-        if (next != null) {
-            next.authenticate(credentials);
-        }
-        return UserRole.UNKNOWN;
+
     }
+
 }

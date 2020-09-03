@@ -19,7 +19,7 @@ public class EntityRepositoryImpl implements EntityRepository {
     }
 
     @Override
-    public UserEntity findUser(CredentialsEntity credentialsEntity) {
+    public UserEntity findUser(Credentials credentials) {
         return (UserEntity) db.get(credentials);
     }
 
