@@ -7,6 +7,7 @@ import com.skillsup.patterns.dto.User;
 
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Proxy implements UserService, UserAuthenticator {
 
@@ -14,7 +15,7 @@ public class Proxy implements UserService, UserAuthenticator {
     private UserServiceImp userServiceImp = new UserServiceImp();
     private EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
     private Credentials credentials;
-
+    private Scanner scanner = new Scanner(System.in);
     public void callCreateUser(Credentials credentials) {
 
         if (authenticator
@@ -26,7 +27,20 @@ public class Proxy implements UserService, UserAuthenticator {
             System.out.println("You are already registered!!!!");
         }
     }
+public void callDeleteUser(Credentials credentials){
 
+    if (authenticator
+            .setNext(new RoleCheckAuthenticator())
+            .setNext(new AdminAuthenticator())
+            .authenticate(credentials).equals(UserRole.ADMIN)){
+        System.out.println("Enter id -:");
+        long id = scanner.nextLong();
+        userServiceImp.deleteUser(id);
+    }
+    else {
+        System.out.println("You do not have access rights!!!");
+    }
+}
 
 
 
