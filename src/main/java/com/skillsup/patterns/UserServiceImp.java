@@ -44,6 +44,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User findUser(Credentials credentials) {
-        return null;
+
+        return Converter.userEntitytoUser(entityRepository.findUser(credentials));
     }
 }
