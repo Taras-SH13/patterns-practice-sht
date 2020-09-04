@@ -15,7 +15,8 @@ import com.skillsup.patterns.dto.User;
  */
 public class App {
 
-    private UserAuthenticator authenticator;
+    public static final EntityRepositoryImpl REPOSITORY = new EntityRepositoryImpl();
+
 
     public static void main(String[] args) throws UnauthorizedAccessException {
         // create Proxy server
@@ -27,7 +28,7 @@ public class App {
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("admin")
                         .setPassword("admin").create()).setUserRole(UserRole.ADMIN).toCreate();
 
-        new EntityRepositoryImpl().save(Converter.userToUserEntity(adminUser));
+        REPOSITORY.save(Converter.userToUserEntity(adminUser));
 //create registred USER
         User simpleUser = new
                 User.UserBuilder().setUserId(3).setUserLogin("user")
@@ -35,12 +36,14 @@ public class App {
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("user")
                         .setPassword("user").create()).setUserRole(UserRole.COMMON).toCreate();
 
-        new EntityRepositoryImpl().save(Converter.userToUserEntity(simpleUser));
+        REPOSITORY.save(Converter.userToUserEntity(simpleUser));
 
 // create a request from unregistered user
         Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
 
+        verification.callCreateUser(newCredentials);
         System.out.println(verification.callFindAllUsers(adminUser.getCredentials()));
+
     }
 
 
