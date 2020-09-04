@@ -38,6 +38,17 @@ public class User {
         return userRole;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", credentials=" + credentials +
+                ", userRole=" + userRole +
+                '}';
+    }
+
     ;
 
     public static class UserBuilder {

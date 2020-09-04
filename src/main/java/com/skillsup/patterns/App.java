@@ -28,10 +28,9 @@ public class App {
         Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
         UserAuthenticator authenticator = new UserAuthenticatorImpl();
 
-        UserServiceImp userServiceImp=new UserServiceImp();
-        userServiceImp.deleteUser(2);
-        userServiceImp.deleteUser(1);
-        System.out.println(UsersDB.getDboffUsers());
+        UserServiceImp userServiceImp = new UserServiceImp();
 
+
+        System.out.println(userServiceImp.findAllUsers(adminUser.getCredentials()));
     }
 }

@@ -2,6 +2,7 @@ package com.skillsup.patterns;
 
 import com.skillsup.patterns.db.EntityRepositoryImpl;
 import com.skillsup.patterns.db.UsersDB;
+import com.skillsup.patterns.dto.Converter;
 import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
@@ -11,8 +12,9 @@ import java.util.stream.Collectors;
 
 public class UserServiceImp implements UserService {
     private static long id;
-    Credentials credentials;
-    EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
+    private Credentials credentials;
+    private EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
+    private List<User> userList;
 
     @Override
     public User createUser(Credentials credentials) {
@@ -37,7 +39,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<User> findAllUsers(Credentials credentials) {
-        return null;
+       return userList=UsersDB.getDboffUsers().values().stream().map(Converter::userEntitytoUser).collect(Collectors.toList());
     }
 
     @Override

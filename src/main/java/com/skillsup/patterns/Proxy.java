@@ -16,6 +16,7 @@ public class Proxy implements UserService, UserAuthenticator {
     private EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
     private Credentials credentials;
     private Scanner scanner = new Scanner(System.in);
+
     public void callCreateUser(Credentials credentials) {
 
         if (authenticator
@@ -27,26 +28,33 @@ public class Proxy implements UserService, UserAuthenticator {
             System.out.println("You are already registered!!!!");
         }
     }
-public void callDeleteUser(Credentials credentials){
 
-    if (authenticator
-            .setNext(new RoleCheckAuthenticator())
-            .setNext(new AdminAuthenticator())
-            .authenticate(credentials).equals(UserRole.ADMIN)){
-        System.out.println("Enter id -:");
-        long id = scanner.nextLong();
-        userServiceImp.deleteUser(id);
+    public void callDeleteUser(Credentials credentials) {
+
+        if (authenticator
+                .setNext(new RoleCheckAuthenticator())
+                .setNext(new AdminAuthenticator())
+                .authenticate(credentials).equals(UserRole.ADMIN)) {
+            System.out.println("Enter id -:");
+            long id = scanner.nextLong();
+            userServiceImp.deleteUser(id);
+        } else {
+            System.out.println("You do not have access rights!!!");
+        }
     }
-    else {
-        System.out.println("You do not have access rights!!!");
+
+    public void callFindAllUsers(Credentials credentials) {
+        if (authenticator
+                .setNext(new RoleCheckAuthenticator())
+                .setNext(new AdminAuthenticator())
+                .authenticate(credentials).equals(UserRole.ADMIN) || equals(UserRole.COMMON)) {
+            System.out.println("Enter id -:");
+            long id = scanner.nextLong();
+            userServiceImp.deleteUser(id);
+        } else {
+            System.out.println("You do not have access rights!!!");
+        }
     }
-}
-
-
-
-
-
-
 
     @Override
     public User createUser(Credentials credentials) {
