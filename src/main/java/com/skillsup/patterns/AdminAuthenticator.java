@@ -3,7 +3,7 @@ package com.skillsup.patterns;
 import com.skillsup.patterns.db.EntityRepositoryImpl;
 import com.skillsup.patterns.dto.Credentials;
 
-public class RoleCheckAuthenticator implements UserAuthenticator {
+public class AdminAuthenticator implements UserAuthenticator {
     UserAuthenticator next;
     EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
 
@@ -14,9 +14,9 @@ public class RoleCheckAuthenticator implements UserAuthenticator {
 
     @Override
     public UserRole authenticate(Credentials credentials) {
-        if (entityRepository.findUser(credentials).getUserRole().equals(UserRole.COMMON)) {
-            System.out.println("Hello, USER!");
-            return UserRole.COMMON;
+        if (entityRepository.findUser(credentials).getUserRole().equals(UserRole.ADMIN)) {
+            System.out.println("Hello, ADMIN!");
+            return UserRole.ADMIN;
         }
 
         return next.authenticate(credentials);

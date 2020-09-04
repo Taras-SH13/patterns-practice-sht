@@ -11,8 +11,11 @@ public class UserAuthenticatorImpl implements UserAuthenticator {
     EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
 
 
-    public void setNext(UserAuthenticator next) {
+    public UserAuthenticator setNext(UserAuthenticator next) {
+
         this.next = next;
+        return next;
+
     }
 
     @Override
@@ -22,10 +25,17 @@ public class UserAuthenticatorImpl implements UserAuthenticator {
         } catch (NullPointerException e) {
             System.out.println("This user is not registered!!");
             return UserRole.UNKNOWN;
-        } finally {
-            if (next != null)
-                return next.authenticate(credentials);
         }
+        finally {
+            if(next!=null)
+            try{
+                return next.authenticate(credentials);
+            }
+            catch (NullPointerException e){
+                return UserRole.UNKNOWN;
+            }
+        }
+
 
     }
 

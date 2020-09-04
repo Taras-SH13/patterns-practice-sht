@@ -24,10 +24,11 @@ public class App {
                         .setPassword("user").create()).setUserRole(UserRole.COMMON).toCreate();
 
         new EntityRepositoryImpl().save(Converter.userToUserEntity(simpleUser));
-        Credentials newCredentials=new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
-        UserAuthenticator userAuthenticator=new UserAuthenticatorImpl();
-        System.out.println(userAuthenticator.authenticate(adminUser.getCredentials()));
-        System.out.println(userAuthenticator.authenticate(newCredentials));
-    }
 
+        Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
+        UserAuthenticator authenticator = new UserAuthenticatorImpl();
+        authenticator.setNext(new RoleCheckAuthenticator()).setNext(new AdminAuthenticator());
+        authenticator.authenticate(adminUser.getCredentials());
+
+    }
 }
