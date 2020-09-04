@@ -35,7 +35,8 @@ public class Proxy implements UserService, UserAuthenticator {
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
                 .setNext(new AdminAuthenticator())
-                .authenticate(credentials).equals(UserRole.ADMIN)) {
+                .authenticate(credentials).equals(UserRole.ADMIN))
+        {
             System.out.println("Enter id -:");
             long id = scanner.nextLong();
             return userServiceImp.deleteUser(id);

@@ -41,8 +41,11 @@ public class App {
 // create a request from unregistered user
         Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
 
-        verification.callCreateUser(newCredentials);
-        System.out.println(verification.callFindAllUsers(adminUser.getCredentials()));
+
+        verification.callDeleteUser(newCredentials);
+
+
+
 
     }
 

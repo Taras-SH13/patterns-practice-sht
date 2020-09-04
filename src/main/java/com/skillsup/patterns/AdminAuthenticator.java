@@ -14,7 +14,8 @@ public class AdminAuthenticator implements UserAuthenticator {
 
     @Override
     public UserRole authenticate(Credentials credentials) {
-        if (entityRepository.findUser(credentials).getUserRole().equals(UserRole.ADMIN)) {
+        if (entityRepository.findUser(credentials).getUserRole().equals(UserRole.ADMIN))
+        {
             System.out.println("Hello, ADMIN!");
             return UserRole.ADMIN;
         }
