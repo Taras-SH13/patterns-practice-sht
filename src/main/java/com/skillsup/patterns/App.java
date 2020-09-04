@@ -7,30 +7,41 @@ import com.skillsup.patterns.dto.Converter;
 import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
+/**
+ * This class was created for demonstration
+ * at the initial stage, the system prompts you to enter your username and password
+ * create credentials from user password and user unique login
+ * checking the access level
+ */
 public class App {
+
+    private UserAuthenticator authenticator;
+
     public static void main(String[] args) throws UnauthorizedAccessException {
+        // create Proxy server
+        Proxy verification = new Proxy();
+        //create ADMIN
         User adminUser = new
-                User.UserBuilder().setUserId(1).setUserLogin("admin")
+                User.UserBuilder().setUserId(11).setUserLogin("admin")
                 .setUserPassword("admin")
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("admin")
                         .setPassword("admin").create()).setUserRole(UserRole.ADMIN).toCreate();
 
         new EntityRepositoryImpl().save(Converter.userToUserEntity(adminUser));
-
+//create registred USER
         User simpleUser = new
-                User.UserBuilder().setUserId(2).setUserLogin("user")
+                User.UserBuilder().setUserId(3).setUserLogin("user")
                 .setUserPassword("user")
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("user")
                         .setPassword("user").create()).setUserRole(UserRole.COMMON).toCreate();
 
         new EntityRepositoryImpl().save(Converter.userToUserEntity(simpleUser));
 
+// create a request from unregistered user
         Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
-        UserAuthenticator authenticator = new UserAuthenticatorImpl();
 
-        UserServiceImp userServiceImp = new UserServiceImp();
-
-
-        System.out.println(userServiceImp.findAllUsers(adminUser.getCredentials()));
+        System.out.println(verification.callFindAllUsers(adminUser.getCredentials()));
     }
+
+
 }

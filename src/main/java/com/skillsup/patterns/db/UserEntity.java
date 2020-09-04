@@ -18,6 +18,16 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", credentials=" + credentials +
+                ", userRole=" + userRole +
+                '}';
+    }
 
     public long getId() {
         return id;

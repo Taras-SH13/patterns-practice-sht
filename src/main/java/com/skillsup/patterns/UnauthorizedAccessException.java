@@ -1,6 +1,6 @@
 package com.skillsup.patterns;
 
-public class UnauthorizedAccessException extends NullPointerException {
+public class UnauthorizedAccessException extends Exception {
 
 
     public UnauthorizedAccessException(String message) {

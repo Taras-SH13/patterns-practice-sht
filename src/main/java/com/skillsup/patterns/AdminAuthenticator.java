@@ -19,6 +19,6 @@ public class AdminAuthenticator implements UserAuthenticator {
             return UserRole.ADMIN;
         }
 
-        return next.authenticate(credentials);
+        return UserRole.UNKNOWN;
     }
 }

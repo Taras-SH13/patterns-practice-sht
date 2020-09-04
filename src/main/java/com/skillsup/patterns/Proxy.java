@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Proxy implements UserService, UserAuthenticator {
 
-    private UserAuthenticator authenticator;
+    private UserAuthenticator authenticator=new UserAuthenticatorImpl();
     private UserServiceImp userServiceImp = new UserServiceImp();
     private EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
     private Credentials credentials;
@@ -25,11 +25,12 @@ public class Proxy implements UserService, UserAuthenticator {
                 .authenticate(credentials).equals(UserRole.UNKNOWN)) {
             entityRepository.save(Converter.userToUserEntity(userServiceImp.createUser(credentials)));
         } else {
+
             System.out.println("You are already registered!!!!");
         }
     }
 
-    public void callDeleteUser(Credentials credentials) {
+    public boolean callDeleteUser(Credentials credentials) {
 
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
@@ -37,34 +38,36 @@ public class Proxy implements UserService, UserAuthenticator {
                 .authenticate(credentials).equals(UserRole.ADMIN)) {
             System.out.println("Enter id -:");
             long id = scanner.nextLong();
-            userServiceImp.deleteUser(id);
+            return userServiceImp.deleteUser(id);
         } else {
+
             System.out.println("You do not have access rights!!!");
+            return false;
+
         }
     }
 
-    public void callFindAllUsers(Credentials credentials) {
+    public List<User> callFindAllUsers(Credentials credentials) {
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
                 .setNext(new AdminAuthenticator())
                 .authenticate(credentials).equals(UserRole.ADMIN)) {
-            System.out.println("Enter id -:");
-            long id = scanner.nextLong();
-            userServiceImp.deleteUser(id);
+            return userServiceImp.findAllUsers(credentials);
         } else {
             System.out.println("You do not have access rights!!!");
+            return null;
         }
     }
-    public void callFindUsers(Credentials credentials) {
+    public User callFindUsers(Credentials credentials) {
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
                 .setNext(new AdminAuthenticator())
                 .authenticate(credentials).equals(UserRole.ADMIN) || equals(UserRole.COMMON)) {
-            System.out.println("Enter id -:");
-            long id = scanner.nextLong();
-            userServiceImp.deleteUser(id);
+
+            return userServiceImp.findUser(credentials);
         } else {
             System.out.println("You do not have access rights!!!");
+            return null;
         }
     }
 
