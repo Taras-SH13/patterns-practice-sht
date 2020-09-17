@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Proxy implements UserService, UserAuthenticator {
 
-    private UserAuthenticator authenticator=new UserAuthenticatorImpl();
+    private UserAuthenticatorImpl authenticator = new UserAuthenticatorImpl();
     private UserServiceImp userServiceImp = new UserServiceImp();
     private EntityRepositoryImpl entityRepository = new EntityRepositoryImpl();
     private Credentials credentials;
@@ -35,8 +35,7 @@ public class Proxy implements UserService, UserAuthenticator {
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
                 .setNext(new AdminAuthenticator())
-                .authenticate(credentials).equals(UserRole.ADMIN))
-        {
+                .authenticate(credentials).equals(UserRole.ADMIN)) {
             System.out.println("Enter id -:");
             long id = scanner.nextLong();
             return userServiceImp.deleteUser(id);
@@ -59,17 +58,19 @@ public class Proxy implements UserService, UserAuthenticator {
             return null;
         }
     }
+
     public User callFindUsers(Credentials credentials) {
         if (authenticator
                 .setNext(new RoleCheckAuthenticator())
                 .setNext(new AdminAuthenticator())
-                .authenticate(credentials).equals(UserRole.ADMIN) || equals(UserRole.COMMON)) {
+                .authenticate(credentials).equals(UserRole.ADMIN)) {
 
             return userServiceImp.findUser(credentials);
-        } else {
-            System.out.println("You do not have access rights!!!");
-            return null;
-        }
+        } else if (authenticator.authenticate(credentials).equals(UserRole.COMMON)) {
+            return userServiceImp.findUser(credentials);
+
+
+        }return null;
     }
 
     @Override

@@ -49,7 +49,8 @@ public class User {
                 '}';
     }
 
-    ;
+
+
 
     public static class UserBuilder {
         private long id;

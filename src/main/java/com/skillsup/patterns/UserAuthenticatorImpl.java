@@ -22,18 +22,16 @@ public class UserAuthenticatorImpl implements UserAuthenticator {
     public UserRole authenticate(Credentials credentials) {
         try {
             return entityRepository.findUser(credentials).getUserRole();
-        } catch (NullPointerException e) {
+        } catch (UnauthorizedAccessException e) {
             System.out.println("This user is not registered!!");
             return UserRole.UNKNOWN;
-        }
-        finally {
-            if(next!=null)
-            try{
-                return next.authenticate(credentials);
-            }
-            catch (NullPointerException e){
-                return UserRole.UNKNOWN;
-            }
+        } finally {
+            if (next != null)
+                try {
+                    return next.authenticate(credentials);
+                } catch (UnauthorizedAccessException e) {
+                    return UserRole.UNKNOWN;
+                }
         }
 
 

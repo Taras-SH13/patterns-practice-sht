@@ -18,7 +18,7 @@ public class App {
     public static final EntityRepositoryImpl REPOSITORY = new EntityRepositoryImpl();
 
 
-    public static void main(String[] args) throws UnauthorizedAccessException {
+    public static void main(String[] args) {
         // create Proxy server
         Proxy verification = new Proxy();
         //create ADMIN
@@ -28,8 +28,11 @@ public class App {
                 .setCredentials(new Credentials.CredentialsBuilder().setLogin("admin")
                         .setPassword("admin").create()).setUserRole(UserRole.ADMIN).toCreate();
 
+
+
         REPOSITORY.save(Converter.userToUserEntity(adminUser));
-//create registred USER
+
+        //create registred USER
         User simpleUser = new
                 User.UserBuilder().setUserId(3).setUserLogin("user")
                 .setUserPassword("user")
@@ -38,15 +41,11 @@ public class App {
 
         REPOSITORY.save(Converter.userToUserEntity(simpleUser));
 
-// create a request from unregistered user
+        // create a request from unregistered user
         Credentials newCredentials = new Credentials.CredentialsBuilder().setLogin("newUser").setPassword("1").create();
 
 
-        verification.callDeleteUser(newCredentials);
-
-
-
-
+        System.out.println(verification.callFindUsers(newCredentials));
     }
 
 

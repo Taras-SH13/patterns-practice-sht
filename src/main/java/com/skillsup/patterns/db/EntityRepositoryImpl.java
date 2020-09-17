@@ -1,5 +1,6 @@
 package com.skillsup.patterns.db;
 
+import com.skillsup.patterns.UnauthorizedAccessException;
 import com.skillsup.patterns.dto.Credentials;
 import com.skillsup.patterns.dto.User;
 
@@ -20,8 +21,13 @@ public class EntityRepositoryImpl implements EntityRepository {
 
     @Override
     public UserEntity findUser(Credentials credentials) {
-        return (UserEntity) db.get(credentials);
-    }
+        if (chek(credentials) == false) {
+
+            throw new UnauthorizedAccessException("No access!");
+
+        }return (UserEntity) db.get(credentials);
+
+        }
 
     public boolean chek(Credentials credentials) {
         return db.containsKey(credentials);
